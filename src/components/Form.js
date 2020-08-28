@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+
 
 function Form(props){
     
@@ -13,7 +13,6 @@ function Form(props){
                 <input name='password' type='password' value={props.password} onChange={props.handlePasswordChange} />
                 <button type='submit'>Submit</button>
             </form>
-            <button onClick={props.showToken}>show token</button>
         </div>
     )
     

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Switch,Route,Redirect} from 'react-router-dom'
 import Post from './components/Post'
 import {useState,useEffect} from 'react';
 import Form from './components/Form'
@@ -11,7 +12,7 @@ const url = 'http://localhost:3001/'
 
 function App() {
 
-  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNDBmODJiYzEyMDI4MWM2MGFiMWI0MiIsImVtYWlsIjoic2tvcGludHNldkBlbWFpbC5jb20iLCJpYXQiOjE1OTgyNzI3OTl9.lW55_zPJ-598Cj1ddePfTyOSvjlH8IRhznuB7mV6mg8')
+  const [token, setToken] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
   const [post,setPost] = useState('')
@@ -76,32 +77,42 @@ function App() {
   }
 
 
-  if(!token){
-    return (
-      <div className='container'>
-        <Form
-          email={email}
-          password={password}
-          getToken={getToken}
-          handleEmailChange={handleEmailChange}
-          handlePasswordChange={handlePasswordChange}
-          showToken={showToken}
-        />
-      </div>
-    );
-  }else{
-    return(
-      <div className='container'>
-        <Greeting 
-          handleTitle={handleTitleChange}
-          handlePost={handlePostChange}
-          postToDb={postToDb}
-          title={title}
-          post={post}
-        />
-      </div>
-    )
-  }
+  return(
+    <div className='container'>
+      <Switch>
+        <Route exact={true} path='/'>
+          {<Greeting />}
+        </Route>
+        <Route path='/login' >
+          {
+            !token ? 
+            <Form 
+              email={email} 
+              password={password}
+              getToken={getToken}
+              handleEmailChange={handleEmailChange}
+              handlePasswordChange={handlePasswordChange}
+              showToken={showToken}
+            />
+            :
+            <Redirect to='/newpost'/>
+          }
+        </Route>
+        <Route path='/newpost'>
+        {
+          <Post 
+            token={token}
+            handleTitle={handleTitleChange}
+            handlePost={handlePostChange}
+            postToDb={postToDb}
+            title={title}
+            post={post}
+          />
+        }
+        </Route>
+      </Switch>
+    </div>
+  )
 }
 
 export default App;
