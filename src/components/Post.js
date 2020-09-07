@@ -1,7 +1,8 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 
 function Post(props){
-    if(props.token){
+    if(props.user){
         return(
             <div>
                 <form onSubmit={props.postToDb}>
@@ -12,6 +13,7 @@ function Post(props){
                     <button type='submit'>Post it</button>
                 </form>
             </div>
+            
         )
     }else{
         return(
