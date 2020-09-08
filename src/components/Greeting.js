@@ -9,7 +9,7 @@ function Greeting(props){
             {!props.user ? <a href='/login'>Log in</a> : <a href='/' onClick={props.logout}>Log out</a>}
             {!props.user ? <p>Welcome to my blog! You're a guest, please log in to add posts</p> : <p>You have admin rights.</p>}
             <ul>
-                {props.posts.map(post => <li key={post.id}>{post.title} - {post.text}</li>)}
+                {props.posts.map(post => <li key={post.id}>{<Link id={post.id} to={`/post/${post.id}`} onClick={props.currentPost}>{post.title}</Link>}</li>)}
             </ul>
         </div>
     )

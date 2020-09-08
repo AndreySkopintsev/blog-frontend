@@ -6,7 +6,7 @@ import App from './App';
 
 
 ReactDOM.render(
-  <BrowserRouter forceRefresh={true}>
+  <BrowserRouter>
     <App />
   </BrowserRouter>,
   document.getElementById('root')

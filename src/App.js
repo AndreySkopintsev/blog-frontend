@@ -5,6 +5,7 @@ import Post from './components/Post'
 import {useState,useEffect} from 'react';
 import Form from './components/Form'
 import Greeting from './components/Greeting'
+import SinglePost from './components/SinglePost'
 import blogService from './services/blogs'
 
 const url = 'http://localhost:3001/'
@@ -20,6 +21,7 @@ function App() {
   const [email, setEmail] = useState('')
   const [post,setPost] = useState('')
   const [title,setTitle] = useState('')
+  const [currentPost,setCurrent] = useState([])
 
 
   useEffect(()=>{
@@ -105,10 +107,21 @@ function App() {
     setUser('')
   }
 
+  const justWork = (e) =>{
+    axios.get(`${url}api/posts/${e.target.id}`)
+      .then(res => { 
+        setCurrent(res.data)
+      })
+  }
 
   return(
     <div className='container'>
       <Switch>
+        <Route path='/post'>
+          <SinglePost 
+            post={currentPost}
+          />
+        </Route>
         <Route path='/login' >
           {
             !user ? 
@@ -140,6 +153,7 @@ function App() {
             user={user}
             logout={logout}
             posts={blogPosts}
+            currentPost={justWork}
           />}
         </Route>
       </Switch>
